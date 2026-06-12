@@ -1,27 +1,31 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "../../supabase/client";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
-  const [checking,setChecking]= useState(true);
-  const [error,   setError]   = useState("");
-  const router       = useRouter();
+  const [checking, setChecking] = useState(true);
+  const [error, setError] = useState("");
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const supabase     = createClient();
+  const supabase = createClient();
 
   useEffect(() => {
     async function check() {
       const { data: { session } } = await supabase.auth.getSession();
-      if (session) { router.push("/invoice"); return; }
+      if (session) { 
+        router.push("/invoice"); 
+        return; 
+      }
       setChecking(false);
       const err = searchParams.get("error");
       if (err === "auth_failed") setError("Sign in failed. Please try again.");
       if (err === "timeout")     setError("Sign in timed out. Please try again.");
     }
     check();
-  }, []);
+  }, [supabase.auth, router, searchParams]);
 
   async function signInWithGoogle() {
     setLoading(true);
@@ -34,7 +38,10 @@ export default function LoginPage() {
           queryParams: { access_type: "offline", prompt: "select_account" },
         },
       });
-      if (error) { setError("Could not connect to Google. Try again."); setLoading(false); }
+      if (error) { 
+        setError("Could not connect to Google. Try again."); 
+        setLoading(false); 
+      }
     } catch (err) {
       setError("Something went wrong. Please try again.");
       setLoading(false);
