@@ -6,6 +6,10 @@ import { useRouter } from "next/navigation";
 import { createClient } from "../../../supabase/client";
 
 export default function AuthCallbackPage() {
+  // ... leave the rest of your original component code here
+}
+
+export default function AuthCallbackPage() {
   const [msg, setMsg] = useState("Completing sign in...");
   const router   = useRouter();
   const supabase = createClient();

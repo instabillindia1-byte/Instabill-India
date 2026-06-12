@@ -6,6 +6,10 @@ import { createClient } from "../../supabase/client";
 import { useRouter } from "next/navigation";
 import Navbar from "../../components/Navbar";
 
+export default function DashboardPage() {
+  // ... leave the rest of your original component code here
+}
+
 function fmt(n){return parseFloat(n||0).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2});}
 function fmtS(n){n=parseFloat(n||0);if(n>=10000000)return "₹"+(n/10000000).toFixed(1)+"Cr";if(n>=100000)return "₹"+(n/100000).toFixed(1)+"L";if(n>=1000)return "₹"+(n/1000).toFixed(1)+"K";return "₹"+Math.round(n);}
 
